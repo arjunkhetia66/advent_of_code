@@ -1,7 +1,5 @@
 #day3
 
-#day 2
-
 library(tidyverse)
 
 #binary table
