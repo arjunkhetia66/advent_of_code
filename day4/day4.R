@@ -22,35 +22,40 @@ for (i in 1:length(bingo_cards_split)){
 }
 
 find_matrix_position <- function(matrix_ins, value){
-  tryCatch(expr = {
-  co_ords <- which(matrix_ins == value, arr.ind = T)
-  co_ords_list <- purrr::map(1:(dim(co_ords)[1]),~as.integer(co_ords[.,]))
-  return(co_ords_list)
-  }, 
-  finally = {print(paste0(value," is not in bingo matrix" )}
-  )
+  find_matrix_position_try <- function(matrix_ins_try, value_try) {
+     co_ords <- which(matrix_ins_try == value_try, arr.ind = T)
+     co_ords_list <- purrr::map(1:(dim(co_ords)[1]),~as.integer(co_ords[.,]))
+     print(paste0(value, " is in the bingo grid"))
+     return(list(co_ords_list,value_try))
+  }
+  try(return(find_matrix_position_try(matrix_ins_try = matrix_ins, value_try = value)), silent = TRUE)
+  print(paste0(value, " is not in the bingo grid"))
+  return(list(list(),c()))
 }
 
 find_matrix_positions <- function(matrix_ins, values) {
   positions_list <- list()
+  values_list <- c()
   for (i in values) {
-    positions_list <- c(positions_list,find_matrix_position(matrix_ins,i))
+    positions_list <- c(positions_list,(find_matrix_position(matrix_ins,i))[[1]])
+    values_list <- c(values_list,(find_matrix_position(matrix_ins,i))[[2]])
   }
   
-  return(positions_list)
+  return(list(positions_list, values_list))
 }
 
-win_check <- function(matrix_input, call, nrows = 5, ncols = 5){
-  matched_positions <- find_matrix_positions(matrix_ins = matrix_input, values = calls)
-  
+win_check <- function(matrix_input, calls, nrows = 5, ncols = 5){
+  matched_positions <- (find_matrix_positions(matrix_ins = matrix_input, values = calls))[[1]]
+  matched_values <- (find_matrix_positions(matrix_ins = matrix_input, values = calls))[[2]]
+  unmarked_numbers_sum <- sum((matrix_input %>% as.integer())[! (matrix_input %>% as.integer()) %in% c(1,9)])
   #row wins
   for (i in 1:nrows){
     for (j in 1:ncols){
       if (any(unlist(purrr::map(matched_positions,~ all(. == c(i,j)))))){
-        matched_calls <- c(matched_calls)
         if (j==nrows){
           print(paste0("row ",i," win !"))
-          return(i)
+          print(paste0("last value called was ", calls[length(calls)]))
+          return(calls[length(calls)] * unmarked_numbers_sum)
         }
       } else {
         break
@@ -64,13 +69,16 @@ win_check <- function(matrix_input, call, nrows = 5, ncols = 5){
       if (any(unlist(purrr::map(matched_positions,~ all(. == c(j,i)))))){
         if (j==ncols){
           print(paste0("column ",i," win !"))
-          return(i)
+          print(paste0("last value called was ", calls[length(calls)]))
+          return(calls[length(calls)] * unmarked_numbers_sum)
         }
       } else {
         break
       }
     }
   }
+  
+  print("no win")
 }
 
 test_matrix <- matrix(c(1,2,3,4,5,6,7,8,9),3,3)
