@@ -1,6 +1,5 @@
 #day 2
-
-library(tidyverse)
+source("utils.R")
 
 #directions table
 directions <- readr::read_delim("day2/submarine_directions.txt", delim = " ")

@@ -1,6 +1,5 @@
 #day 1
-library(tidyverse)
-library(runner)
+source("utils.R")
 
 depths <- readr::read_delim("day1/day_1_input.txt", delim = " ", col_names = FALSE) 
 names(depths) <- "depth"

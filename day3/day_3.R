@@ -1,6 +1,6 @@
 #day3
 
-library(tidyverse)
+source("utils.R")
 
 #binary table
 binary_report <- readr::read_csv("day3/day_3_input.txt", col_names = FALSE)
