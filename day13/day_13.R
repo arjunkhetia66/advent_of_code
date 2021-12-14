@@ -53,10 +53,3 @@ for (i in 1:length(fold_list)) {
   folded_map <- transform_folded_points(which_fold =  fold_list[[i]][[1]], fold_line = as.numeric(fold_list[[i]][[2]]), map = folded_map)
 }
 
-min_x_plot <- 656
-max_x_plot <- 1310
-map_split <- split(folded_map, folded_map[["y"]])[[1]]$x - 655
-dot_print <- paste(rep(".", 655), collapse = "")
-#for (i in 1:(max_x_plot - (min_x_plot-1))) {
-#  
-#}
