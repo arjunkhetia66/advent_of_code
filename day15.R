@@ -3,7 +3,7 @@ source("utils.R")
 library(igraph)
 
 #load in cave map
-cave_map <-  readr::read_csv("day15/day_15_input.txt", col_names = FALSE, col_types = "c")
+cave_map <-  readr::read_csv("day15/day_15_test_input.txt", col_names = FALSE, col_types = "c")
 nc <- nchar(as.character(cave_map[1,]))
 nr <- nrow(cave_map)
 
@@ -12,6 +12,27 @@ for (i in 1:nc){
     mutate(!!sym(as.character(i)) := substr(X1,i,i)) 
 }
 cave_map <- cave_map %>% select(-X1)
+
+#########################################
+#PART 2
+#for (i in 2:5){
+#  for (j in 1:nc) {
+#    print(j)
+#    cave_map <- cave_map %>%
+#      mutate(!!(as.character(j+nc*(i-1))) := if_else((as.numeric(!!sym(as.character(j))) + 1) <= 9 , (as.numeric(!!sym(as.character(j))) + 1), (as.numeric(!!sym(as.character(j))) - 8)))
+               
+#  }
+#}
+
+
+
+
+
+
+
+
+
+#########################################
 
 #position indexes
 positions_indexed <- (matrix(1:(nc*nr), nrow = nr, ncol = nc, byrow = TRUE))
