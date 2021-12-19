@@ -106,15 +106,12 @@ vertical_checks <- vertical_checks[,colSums(is.na(vertical_checks))<nrow(vertica
 #loop through each time point to get the initial speeds at which both 
 #horiontal and vertical speeds cause the probe to enter the target simultaneosly
 max_ys_list <- c()
-times <- c()
-combo_lengths <- c()
 combo_df <- tibble(hps = "", vps = "")
 for (i in 1:600){
   hps <- names(which((horizontal_checks %>% filter(t==i) %>% as.list()) == TRUE))[-1]
   vps <- names(which((vertical_checks %>% filter(t==i) %>% as.list()) == TRUE))[-1]
   combos <- expand_grid(hps,vps) 
   combo_df <- combo_df %>% rbind(combos)
-  combo_lengths <- c(combo_lengths ,nrow(combos))
   max_ys <- combos$vps %>% as.numeric() %>% max()
   max_ys_list <- c(max_ys_list, max_ys)
 }
