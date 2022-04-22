@@ -1,4 +1,5 @@
 #day 1
+#conflict 1
 source("utils.R")
 
 depths <- readr::read_delim("day1/day_1_input.txt", delim = " ", col_names = FALSE) 
@@ -11,6 +12,8 @@ depths_previous_joiner <- function(depths){
   depths_indexed_for_join <- indexed_depths %>% mutate(join_index = index -1) %>% select(-index)
   cartesian_depths <- indexed_depths %>% left_join(depths_indexed_for_join, 
                                                    by = c("index"="join_index")) 
+  
+  
   
   return(cartesian_depths)
 }
