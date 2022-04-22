@@ -1,5 +1,6 @@
 #day 1
-source("utils.R")
+#conflict 1
+source("utils.R") #conflict 2
 
 #conflict 3
 
@@ -13,6 +14,8 @@ depths_previous_joiner <- function(depths){
   depths_indexed_for_join <- indexed_depths %>% mutate(join_index = index -1) %>% select(-index)
   cartesian_depths <- indexed_depths %>% left_join(depths_indexed_for_join, 
                                                    by = c("index"="join_index")) 
+  
+  
   
   return(cartesian_depths)
 }
