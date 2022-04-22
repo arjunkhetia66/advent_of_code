@@ -1,6 +1,8 @@
 #day 1
 source("utils.R")
 
+#conflict 3
+
 depths <- readr::read_delim("day1/day_1_input.txt", delim = " ", col_names = FALSE) 
 names(depths) <- "depth"
 
